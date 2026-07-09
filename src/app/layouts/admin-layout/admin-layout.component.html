@@ -1,0 +1,20 @@
+<div class="layout-wrapper">
+  <app-header (toggleSidebar)="toggleSidebar(drawer)"></app-header>
+
+  <mat-sidenav-container class="layout-container" autosize>
+    <mat-sidenav
+      #drawer
+      [style.width.px]="collapsed ? 70 : 250"
+      [mode]="isMobile ? 'over' : 'side'"
+      [opened]="!isMobile || mobileOpened"
+    >
+      <app-sidebar [collapsed]="collapsed"></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

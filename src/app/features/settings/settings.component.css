@@ -1,0 +1,36 @@
+.settings-container {
+  padding: 8px;
+}
+
+.page-title {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.settings-card {
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.settings-card mat-card-header {
+  margin-bottom: 24px;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}

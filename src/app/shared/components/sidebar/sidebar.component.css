@@ -1,0 +1,57 @@
+.sidebar{
+
+    height:100%;
+
+}
+
+mat-nav-list{
+
+    padding:16px;
+
+}
+
+a[mat-list-item]{
+
+    margin-bottom:8px;
+
+    border-radius:8px;
+
+}
+
+.active{
+
+    background:#e3f2fd;
+
+}
+
+.active mat-icon,
+.active span{
+
+    color:#1976d2;
+    font-weight:600;
+
+}
+
+:host.collapsed mat-nav-list {
+    padding: 8px 4px;
+}
+
+:host.collapsed a[mat-list-item] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+:host.collapsed a[mat-list-item] ::ng-deep .mdc-list-item__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+:host.collapsed a[mat-list-item] ::ng-deep .mat-mdc-list-item-unscoped-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

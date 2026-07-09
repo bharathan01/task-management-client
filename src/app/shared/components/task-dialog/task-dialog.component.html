@@ -1,0 +1,79 @@
+<h2 mat-dialog-title style="display: flex; align-items: center; gap: 8px; margin-bottom: 0;">
+  <mat-icon style="color: #1976d2; font-size: 24px; width: 24px; height: 24px;">assignment</mat-icon>
+  <span>{{ data?.task ? 'Edit Task' : 'Create Task' }}</span>
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="taskForm" class="task-form">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Task Title</mat-label>
+      <input matInput formControlName="title" placeholder="Ex. Design UI">
+      <mat-error *ngIf="taskForm.get('title')?.hasError('required')">Title is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Story Points</mat-label>
+        <input matInput type="number" formControlName="storyPoints">
+        <mat-error *ngIf="taskForm.get('storyPoints')?.hasError('required')">Required</mat-error>
+        <mat-error *ngIf="taskForm.get('storyPoints')?.hasError('min')">Must be > 0</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="High">High</mat-option>
+          <mat-option value="Critical">Critical</mat-option>
+        </mat-select>
+        <mat-error *ngIf="taskForm.get('priority')?.hasError('required')">Required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Planned Date</mat-label>
+        <input matInput [matDatepicker]="plannedPicker" formControlName="plannedDate">
+        <mat-datepicker-toggle matIconSuffix [for]="plannedPicker"></mat-datepicker-toggle>
+        <mat-datepicker #plannedPicker></mat-datepicker>
+        <mat-error *ngIf="taskForm.get('plannedDate')?.hasError('required')">Required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Due Date</mat-label>
+        <input matInput [matDatepicker]="duePicker" formControlName="dueDate">
+        <mat-datepicker-toggle matIconSuffix [for]="duePicker"></mat-datepicker-toggle>
+        <mat-datepicker #duePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <!-- Form level error for date mismatch -->
+    <mat-error class="global-error" *ngIf="taskForm.hasError('dateMismatch')">
+      Due date cannot be earlier than Planned Date.
+    </mat-error>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Backlog">Backlog</mat-option>
+        <mat-option value="Planned">Planned</mat-option>
+        <mat-option value="In_Progress">In Progress</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="taskForm.invalid || isSaving">
+    <mat-spinner *ngIf="isSaving" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+    <span>Save</span>
+  </button>
+</mat-dialog-actions>

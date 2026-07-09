@@ -1,0 +1,31 @@
+<div class="sidebar">
+
+  <mat-nav-list>
+    @for(menu of menus; track menu.route){
+
+<a
+    mat-list-item
+    [routerLink]="menu.route"
+    routerLinkActive="active">
+
+    <mat-icon matListItemIcon>
+
+        {{menu.icon}}
+
+    </mat-icon>
+
+    @if(!collapsed){
+
+        <span matListItemTitle>
+
+            {{menu.title}}
+
+        </span>
+
+    }
+
+</a>
+
+}
+  </mat-nav-list>
+</div>

@@ -1,0 +1,30 @@
+.task-form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 16px;
+  min-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.global-error {
+  font-size: 12px;
+  margin-bottom: 16px;
+  margin-top: -10px;
+}
+
+::ng-deep .mat-datepicker-toggle {
+  color: #1976d2 !important;
+}

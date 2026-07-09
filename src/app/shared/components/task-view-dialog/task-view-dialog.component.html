@@ -1,0 +1,79 @@
+<div class="view-dialog-container">
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Loading task details...</p>
+  </div>
+
+  <div class="error-container" *ngIf="!isLoading && errorMessage">
+    <mat-icon color="warn" class="error-icon">error</mat-icon>
+    <p>{{ errorMessage }}</p>
+    <button mat-flat-button color="primary" (click)="close()">Close</button>
+  </div>
+
+  <div class="task-detail-content" *ngIf="!isLoading && task">
+    <div class="header-section">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <h2 class="task-title">{{ task.title }}</h2>
+      </div>
+      <button mat-icon-button (click)="close()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <mat-dialog-content class="dialog-scroll-content">
+      <div class="badge-row">
+        <span class="status-badge" [ngClass]="task.status.toLowerCase()">
+          {{ task.status === 'In_Progress' ? 'In Progress' : task.status }}
+        </span>
+        <span class="priority-badge" 
+              [style.backgroundColor]="getPriorityColor(task.priority)" 
+              style="color: #ffffff;">
+          {{ task.priority }}
+        </span>
+        <div class="points-badge" *ngIf="task.storyPoints">
+          <strong>{{ task.storyPoints }}</strong> SP
+        </div>
+      </div>
+
+      <div class="section-container">
+        <h4 class="section-title">Description</h4>
+        <p class="description-text" *ngIf="task.description; else noDesc">
+          {{ task.description }}
+        </p>
+        <ng-template #noDesc>
+          <p class="description-text empty">No description provided for this task.</p>
+        </ng-template>
+      </div>
+
+      <div class="dates-grid">
+        <div class="date-item">
+          <mat-icon class="date-icon">event</mat-icon>
+          <div class="date-info">
+            <span class="date-label">Planned Date</span>
+            <span class="date-val">{{ task.plannedDate | date:'longDate' }}</span>
+          </div>
+        </div>
+        <div class="date-item" *ngIf="task.dueDate">
+          <mat-icon class="date-icon">event_busy</mat-icon>
+          <div class="date-info">
+            <span class="date-label">Due Date</span>
+            <span class="date-val">{{ task.dueDate | date:'longDate' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="meta-section">
+        <div class="meta-item" *ngIf="task.createdAt">
+          <span>Created:</span> {{ task.createdAt | date:'medium' }}
+        </div>
+        <div class="meta-item" *ngIf="task.updatedAt">
+          <span>Last Updated:</span> {{ task.updatedAt | date:'medium' }}
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-flat-button color="primary" (click)="close()">Done</button>
+    </mat-dialog-actions>
+  </div>
+</div>

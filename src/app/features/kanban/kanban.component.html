@@ -1,0 +1,181 @@
+<div class="kanban-container">
+  <div class="header-actions">
+    <h1 class="page-title">Kanban Board</h1>
+  </div>
+
+  <div class="board" cdkDropListGroup>
+    
+    <!-- Backlog Column -->
+    <div class="board-column">
+      <div class="column-header">
+        <h2 class="column-title">Backlog</h2>
+        <span class="task-count">{{backlog.length}}</span>
+      </div>
+      <div
+        id="Backlog"
+        cdkDropList
+        [cdkDropListData]="backlog"
+        class="task-list"
+        (cdkDropListDropped)="drop($event, 'Backlog')">
+        @for (task of backlog; track task.id) {
+          <mat-card class="task-card" cdkDrag>
+            <mat-card-header>
+              <mat-card-title class="task-title">{{task.title}}</mat-card-title>
+              <div class="card-header-actions">
+                <button mat-icon-button class="view-btn" (click)="viewTask(task)" title="View Details"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button class="edit-btn" (click)="openTaskDialog(task)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description" *ngIf="task.description">{{task.description | slice:0:60}}{{task.description.length > 60 ? '...' : ''}}</p>
+              <div class="task-meta">
+                <span [ngStyle]="{'color': getPriorityColorHex(task.priority), 'font-weight': '600'}">{{task.priority}}</span>
+                <div class="points-badge">{{task.storyPoints}}</div>
+              </div>
+              <div class="task-dates-container">
+                <div class="task-date">
+                  <mat-icon>event</mat-icon>
+                  <span>Planned: {{task.plannedDate | date:'shortDate'}}</span>
+                </div>
+                <div class="task-date created-date" *ngIf="task.createdAt">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Created: {{task.createdAt | date:'shortDate'}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+
+    <!-- Planned Column -->
+    <div class="board-column">
+      <div class="column-header">
+        <h2 class="column-title">Planned</h2>
+        <span class="task-count">{{planned.length}}</span>
+      </div>
+      <div
+        id="Planned"
+        cdkDropList
+        [cdkDropListData]="planned"
+        class="task-list"
+        (cdkDropListDropped)="drop($event, 'Planned')">
+        @for (task of planned; track task.id) {
+          <mat-card class="task-card" cdkDrag>
+            <mat-card-header>
+              <mat-card-title class="task-title">{{task.title}}</mat-card-title>
+              <div class="card-header-actions">
+                <button mat-icon-button class="view-btn" (click)="viewTask(task)" title="View Details"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button class="edit-btn" (click)="openTaskDialog(task)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description" *ngIf="task.description">{{task.description | slice:0:60}}{{task.description.length > 60 ? '...' : ''}}</p>
+              <div class="task-meta">
+                <span [ngStyle]="{'color': getPriorityColorHex(task.priority), 'font-weight': '600'}">{{task.priority}}</span>
+                <div class="points-badge">{{task.storyPoints}}</div>
+              </div>
+              <div class="task-dates-container">
+                <div class="task-date">
+                  <mat-icon>event</mat-icon>
+                  <span>Planned: {{task.plannedDate | date:'shortDate'}}</span>
+                </div>
+                <div class="task-date created-date" *ngIf="task.createdAt">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Created: {{task.createdAt | date:'shortDate'}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+
+    <!-- In Progress Column -->
+    <div class="board-column">
+      <div class="column-header">
+        <h2 class="column-title">In Progress</h2>
+        <span class="task-count">{{inProgress.length}}</span>
+      </div>
+      <div
+        id="In_Progress"
+        cdkDropList
+        [cdkDropListData]="inProgress"
+        class="task-list"
+        (cdkDropListDropped)="drop($event, 'In_Progress')">
+        @for (task of inProgress; track task.id) {
+          <mat-card class="task-card" cdkDrag>
+            <mat-card-header>
+              <mat-card-title class="task-title">{{task.title}}</mat-card-title>
+              <div class="card-header-actions">
+                <button mat-icon-button class="view-btn" (click)="viewTask(task)" title="View Details"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button class="edit-btn" (click)="openTaskDialog(task)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description" *ngIf="task.description">{{task.description | slice:0:60}}{{task.description.length > 60 ? '...' : ''}}</p>
+              <div class="task-meta">
+                <span [ngStyle]="{'color': getPriorityColorHex(task.priority), 'font-weight': '600'}">{{task.priority}}</span>
+                <div class="points-badge">{{task.storyPoints}}</div>
+              </div>
+              <div class="task-dates-container">
+                <div class="task-date">
+                  <mat-icon>event</mat-icon>
+                  <span>Planned: {{task.plannedDate | date:'shortDate'}}</span>
+                </div>
+                <div class="task-date created-date" *ngIf="task.createdAt">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Created: {{task.createdAt | date:'shortDate'}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div class="board-column">
+      <div class="column-header">
+        <h2 class="column-title">Completed</h2>
+        <span class="task-count">{{completed.length}}</span>
+      </div>
+      <div
+        id="Completed"
+        cdkDropList
+        [cdkDropListData]="completed"
+        class="task-list"
+        (cdkDropListDropped)="drop($event, 'Completed')">
+        @for (task of completed; track task.id) {
+          <mat-card class="task-card" cdkDrag>
+            <mat-card-header>
+              <mat-card-title class="task-title">{{task.title}}</mat-card-title>
+              <div class="card-header-actions">
+                <button mat-icon-button class="view-btn" (click)="viewTask(task)" title="View Details"><mat-icon>visibility</mat-icon></button>
+                <button mat-icon-button class="edit-btn" (click)="openTaskDialog(task)"><mat-icon>edit</mat-icon></button>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="task-description" *ngIf="task.description">{{task.description | slice:0:60}}{{task.description.length > 60 ? '...' : ''}}</p>
+              <div class="task-meta">
+                <span [ngStyle]="{'color': getPriorityColorHex(task.priority), 'font-weight': '600'}">{{task.priority}}</span>
+                <div class="points-badge">{{task.storyPoints}}</div>
+              </div>
+              <div class="task-dates-container">
+                <div class="task-date">
+                  <mat-icon>event</mat-icon>
+                  <span>Planned: {{task.plannedDate | date:'shortDate'}}</span>
+                </div>
+                <div class="task-date created-date" *ngIf="task.createdAt">
+                  <mat-icon>schedule</mat-icon>
+                  <span>Created: {{task.createdAt | date:'shortDate'}}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    </div>
+
+  </div>
+</div>
